@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+
+    /* Modo claro por defecto */
+    html {
+        background-color: #ffffff;
+    }
+
+    body {
+        color: #000000;
+    }
+
+    /* Modo oscuro: la clase 'dark' vive en <html> */
+    html.dark {
+        background-color: #111827;
+    }
+
+    html.dark body {
+        color: #ffffff;
+    } 
+}
