@@ -71,6 +71,5 @@ npm run dev
 
 🔗 Licencia: MIT
 
-📣 Demo (opcional)
-Puedes ver una demo en vivo aquí:
+📣 Puedes ver una demo en vivo aquí:
 👉 https://kvothe73.github.io/live-markdown-editor
