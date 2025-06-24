@@ -1,16 +1,8 @@
-# <!--
+# 📘 Markdown Live Editor
 
-🔷 MARKDOWN EDITOR COMPONENT - README
-💡 Editor Markdown moderno con vista previa, modo oscuro y exportación.
-Diseñado como proyecto de portfolio para demostrar habilidades en: - Vue 3 + Composition API - Markdown rendering - UI semántica y estilizada manualmente
-===========================================================================
--->
+Un completo y estilizado **editor Markdown con vista previa en tiempo real**, resaltado de sintaxis, modo oscuro/claro, idioma español/inglés, exportación y más. Este proyecto forma parte de mi portfolio y está diseñado para mostrar una implementación profesional de un componente Vue autocontenible.
 
-# 📘 Markdown Editor
-
-Un completo y estilizado **editor Markdown con vista previa en tiempo real**, resaltado de sintaxis, modo oscuro, exportación y más. Este proyecto forma parte de mi portfolio y está diseñado para mostrar una implementación profesional de un componente Vue autocontenible.
-
-![Vista del editor](@/markdownPreview.png)
+![Vista del editor](@/assets/markdownPreview.png)
 
 ---
 

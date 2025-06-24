@@ -28,15 +28,17 @@
           @click="setLang('es')"
           :aria-label="t('lang.es')"
           :title="t('lang.es')"
+          :class="{ active: isLangEs }"
         >
-          <img src="../assets/flags/es.png" alt="Español" class="flag" />
+          <img :src="flagEs" alt="Español" class="flag" />
         </button>
         <button
           @click="setLang('en')"
           :aria-label="t('lang.en')"
           :title="t('lang.en')"
+          :class="{ active: isLangEn }"
         >
-          <img src="../assets/flags/en.png" alt="English" class="flag" />
+          <img :src="flagEn" alt="English" class="flag" />
         </button>
       </div>
     </div>
@@ -85,17 +87,21 @@ import { markedHighlight } from "marked-highlight";
 import hljs from "highlight.js";
 import "highlight.js/styles/github-dark.css";
 import { useI18n } from "vue-i18n";
+import flagEs from "../assets/flags/es.png";
+import flagEn from "../assets/flags/en.png";
 
 // 🌐 i18n
 const { t, locale } = useI18n();
 const setLang = (lang: string) => (locale.value = lang);
+const isLangEs = computed(() => locale.value === "es");
+const isLangEn = computed(() => locale.value === "en");
 
 // 📁 Estado global y de configuración
 
-// 🌙 Tema claro/oscuro
-const theme = ref<"light" | "dark">(
-  document.documentElement.classList.contains("dark") ? "dark" : "light"
-);
+// 🌙 Tema claro/oscuro (oscuro por defecto, respeta el estado anterior si se recarga)
+const storedTheme = localStorage.getItem("theme");
+const theme = ref<"light" | "dark">(storedTheme === "light" ? "light" : "dark");
+document.documentElement.classList.toggle("dark", theme.value === "dark");
 const toggleTheme = () => {
   theme.value = theme.value === "light" ? "dark" : "light";
   document.documentElement.classList.toggle("dark", theme.value === "dark");
@@ -281,6 +287,20 @@ html.dark {
   height: 16px;
   border-radius: 2px;
   object-fit: cover;
+  transition: transform 0.2s ease;
+}
+
+.lang-switch button {
+  background: transparent;
+  border: none;
+  padding: 2px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.lang-switch button.active {
+  box-shadow: 0 0 0 2px var(--border);
+  transform: scale(1.1);
 }
 
 /* 🧭 Pestañas de navegación (Markdown | Preview | HTML) */
@@ -325,6 +345,7 @@ textarea.editor {
   font-size: 1rem;
   background-color: var(--bg);
   color: var(--fg);
+  min-height: 73vh;
 }
 
 /* 👁 Vista previa del Markdown */
