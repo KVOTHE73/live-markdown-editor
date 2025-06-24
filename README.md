@@ -2,6 +2,10 @@
 
 Un completo y estilizado **editor Markdown con vista previa en tiempo real**, resaltado de sintaxis, modo oscuro/claro, idioma español/inglés, exportación y más. Este proyecto forma parte de mi portfolio y está diseñado para mostrar una implementación profesional de un componente Vue autocontenible.
 
+![GitHub repo size](https://img.shields.io/github/repo-size/KVOTHE73/live-markdown-editor)
+![GitHub last commit](https://img.shields.io/github/last-commit/KVOTHE73/live-markdown-editor)
+![GitHub license](https://img.shields.io/github/license/KVOTHE73/live-markdown-editor)
+
 ![Vista del editor](./public/markdownPreview.png)
 
 ---
@@ -56,7 +60,7 @@ npm run dev
 📅 Metainformación
 📁 Proyecto: Markdown Editor
 
-🧠 Autor: [Nacho Rodríguez](www.nacho-rodriguez.com)
+🧠 Autor: [Nacho Rodríguez](https://www.nacho-rodriguez.com)
 
 📦 Tipo: Componente Vue 3 autocontenible
 
