@@ -208,6 +208,20 @@ const toolbarButtons = computed(() => [
       URL.revokeObjectURL(url);
     },
   },
+  {
+    label: "📄",
+    title: t("Exportar PDF"),
+    action: () => {
+      const originalTitle = document.title;
+      document.title = "Markdown PDF";
+
+      // 🕒 Espera un ciclo antes de imprimir
+      setTimeout(() => {
+        window.print();
+        document.title = originalTitle;
+      }, 100);
+    },
+  },
   { label: "🧹", title: t("Limpiar"), action: () => (markdownText.value = "") },
 ]);
 
@@ -372,5 +386,37 @@ textarea.editor {
   word-break: break-word; /* 🧠 fuerza el ajuste de palabras largas */
   font-size: 1rem;
   font-family: monospace;
+}
+
+/* 🖨️ Estilos para impresión en PDF */
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+  }
+
+  /* Oculta todo menos el contenido que nos interesa */
+  .markdown-editor > *:not(.panels) {
+    display: none !important;
+  }
+
+  .preview {
+    all: unset;
+    display: block;
+    padding: 2rem;
+    color: black !important;
+    background: white !important;
+    font-size: 1rem;
+    font-family: Georgia, serif;
+    line-height: 1.6;
+  }
+
+  .panels {
+    padding: 0 !important;
+  }
+
+  html.dark {
+    background: white !important;
+  }
 }
 </style>

@@ -29,6 +29,7 @@ Un completo y estilizado **editor Markdown con vista previa en tiempo real**, re
 - ✅ Selector de idioma español/inglés con persistencia local
 - ✅ Exportación a `.html` con estilo básico embebido
 - ✅ Copiar HTML al portapapeles
+- ✅ Exportación a PDF con estilo básico embebido
 - ✅ Limpieza rápida del contenido
 - ✅ Responsive y autocontenible
 
