@@ -345,7 +345,7 @@ textarea.editor {
   font-size: 1rem;
   background-color: var(--bg);
   color: var(--fg);
-  min-height: 73vh;
+  min-height: 72vh;
 }
 
 /* 👁 Vista previa del Markdown */
