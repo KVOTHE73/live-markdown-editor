@@ -4,6 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "homepage": "https://kvothe73.github.io/live-markdown-editor",
+  "license": "MIT",
+  "author": "Nacho Rodríguez",
+  "description": "A live Markdown editor with syntax highlighting and Tailwind CSS.",
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc -b && vite build",
