@@ -21,6 +21,24 @@
       >
         {{ btn.label }}
       </button>
+
+      <!-- 🌐 Selector de idioma -->
+      <div class="lang-switch">
+        <button
+          @click="setLang('es')"
+          :aria-label="t('lang.es')"
+          :title="t('lang.es')"
+        >
+          <img src="../assets/flags/es.png" alt="Español" class="flag" />
+        </button>
+        <button
+          @click="setLang('en')"
+          :aria-label="t('lang.en')"
+          :title="t('lang.en')"
+        >
+          <img src="../assets/flags/en.png" alt="English" class="flag" />
+        </button>
+      </div>
     </div>
 
     <!-- 🧭 Navegación entre vistas -->
@@ -31,7 +49,7 @@
         :class="{ active: mode === opt }"
         @click="mode = opt"
       >
-        {{ opt }}
+        {{ t("tabs." + opt) }}
       </button>
     </div>
 
@@ -42,7 +60,7 @@
         ref="ta"
         v-model="markdownText"
         class="editor"
-        placeholder="Escribe tu Markdown aquí..."
+        :placeholder="t('placeholders.markdown')"
         v-show="mode === 'Markdown'"
       ></textarea>
 
@@ -61,11 +79,16 @@
 
 <script setup lang="ts">
 // ⛳ Imports
-import { ref, watch, computed } from "vue";
+import { ref, watch, computed, onMounted } from "vue";
 import { marked } from "marked";
 import { markedHighlight } from "marked-highlight";
 import hljs from "highlight.js";
 import "highlight.js/styles/github-dark.css";
+import { useI18n } from "vue-i18n";
+
+// 🌐 i18n
+const { t, locale } = useI18n();
+const setLang = (lang: string) => (locale.value = lang);
 
 // 📁 Estado global y de configuración
 
@@ -87,10 +110,10 @@ marked.use(
 );
 
 // 📄 Estados principales
-const markdownText = ref(
-  localStorage.getItem("markdown-draft") || "# Bienvenido"
-);
+const markdownText = ref("");
 const renderedHtml = ref("");
+// Flag para saber si el texto fue autogenerado
+const isDefaultIntro = ref(true);
 
 // 🎛️ Modos de visualización disponibles
 const viewModes = ["Markdown", "Vista Previa", "HTML"] as const;
@@ -108,6 +131,18 @@ watch(
       renderedHtml.value = result;
       localStorage.setItem("markdown-draft", val);
     }, 30);
+  },
+  { immediate: true }
+);
+
+// 🔄 Cambiar el título del documento y, si el texto es el default, actualizarlo
+watch(
+  locale,
+  () => {
+    document.title = t("title");
+    if (isDefaultIntro.value) {
+      markdownText.value = `# ${t("bienvenido")}`;
+    }
   },
   { immediate: true }
 );
@@ -139,21 +174,21 @@ const wrap = (prefix: string, suffix: string) => {
 const toolbarButtons = computed(() => [
   {
     label: theme.value === "light" ? "🌙" : "☀️",
-    title: "Cambiar tema",
+    title: t("Cambiar tema"),
     action: toggleTheme,
   },
-  { label: "B", title: "Negrita", action: () => wrap("**", "**") },
-  { label: "I", title: "Cursiva", action: () => wrap("_", "_") },
-  { label: "•", title: "Lista", action: () => wrap("- ", "") },
-  { label: "🔗", title: "Enlace", action: () => wrap("[", "](url)") },
+  { label: "B", title: t("Negrita"), action: () => wrap("**", "**") },
+  { label: "I", title: t("Cursiva"), action: () => wrap("_", "_") },
+  { label: "•", title: t("Lista"), action: () => wrap("- ", "") },
+  { label: "🔗", title: t("Enlace"), action: () => wrap("[", "](url)") },
   {
     label: "📋",
-    title: "Copiar HTML",
+    title: t("Copiar HTML"),
     action: async () => await navigator.clipboard.writeText(renderedHtml.value),
   },
   {
     label: "💾",
-    title: "Exportar HTML",
+    title: t("Exportar HTML"),
     action: () => {
       const html = `<!DOCTYPE html><html><head><meta charset='utf-8'/><title>Markdown</title><style>body{font-family:sans-serif;padding:2rem;}pre,code{background:#f4f4f4;padding:0.2em;}</style></head><body>${renderedHtml.value}</body></html>`;
       const blob = new Blob([html], { type: "text/html" });
@@ -167,8 +202,20 @@ const toolbarButtons = computed(() => [
       URL.revokeObjectURL(url);
     },
   },
-  { label: "🧹", title: "Limpiar", action: () => (markdownText.value = "") },
+  { label: "🧹", title: t("Limpiar"), action: () => (markdownText.value = "") },
 ]);
+
+// 📝 Estado para saber si es el texto de introducción por defecto
+onMounted(() => {
+  const saved = localStorage.getItem("markdown-draft");
+  if (saved) {
+    markdownText.value = saved;
+    isDefaultIntro.value = false;
+  } else {
+    markdownText.value = `# ${t("bienvenido")}`;
+    isDefaultIntro.value = true;
+  }
+});
 </script>
 
 <style>
@@ -222,6 +269,20 @@ html.dark {
   background: var(--panel);
 }
 
+/* 🌐 Selector de idioma */
+.lang-switch {
+  margin-left: auto;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.flag {
+  width: 24px;
+  height: 16px;
+  border-radius: 2px;
+  object-fit: cover;
+}
+
 /* 🧭 Pestañas de navegación (Markdown | Preview | HTML) */
 .tabs {
   display: flex;
@@ -250,7 +311,7 @@ html.dark {
   display: block;
   padding: 1rem;
   background: var(--bg);
-  height: 70vh; /* igual altura para todas las vistas */
+  min-height: 73vh; /* igual altura para todas las vistas */
 }
 
 /* 📝 Editor de texto Markdown */
@@ -278,6 +339,7 @@ textarea.editor {
   font-size: 1rem;
   font-family: Georgia, Cambria, "Times New Roman", Times, serif;
   line-height: 1.6;
+  min-height: 70vh;
 }
 
 /* 🧾 Vista HTML cruda (resultado del Markdown renderizado) */
@@ -287,11 +349,6 @@ textarea.editor {
   overflow-x: hidden; /* 💡 evita scroll horizontal */
   white-space: pre-wrap; /* 🔁 evita scroll horizontal por líneas largas */
   word-break: break-word; /* 🧠 fuerza el ajuste de palabras largas */
-  box-sizing: border-box;
-  padding: 1rem;
-  background: var(--panel);
-  border: 1px solid var(--border);
-  border-radius: 8px;
   font-size: 1rem;
   font-family: monospace;
 }

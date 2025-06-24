@@ -30,6 +30,7 @@ Un completo y estilizado **editor Markdown con vista previa en tiempo real**, re
 - ✅ Vista previa en vivo con estilos tipográficos cuidados
 - ✅ Vista del HTML crudo generado
 - ✅ Modo oscuro/claro con persistencia local
+- ✅ Selector de idioma español/inglés con persistencia local
 - ✅ Exportación a `.html` con estilo básico embebido
 - ✅ Copiar HTML al portapapeles
 - ✅ Limpieza rápida del contenido
