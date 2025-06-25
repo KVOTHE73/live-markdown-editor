@@ -20,6 +20,24 @@ Un completo y estilizado **editor Markdown con vista previa en tiempo real**, re
 
 ---
 
+## 🗂️ Estructura principal
+
+```
+src/
+├── components/
+│   └── MarkdownEditor.vue     # Componente principal de markdown
+├── assets/
+│   └── flags/           # Banderas de idiomas
+├── locales/
+│   ├── en.json
+│   └── es.json
+├── App.vue              # Componente raíz
+├── main.ts              # Punto de entrada
+└── ...
+```
+
+---
+
 ## ✨ Funcionalidades
 
 - ✅ Edición Markdown con envoltorios (negrita, cursiva, enlaces…)
