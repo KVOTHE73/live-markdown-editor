@@ -25,14 +25,14 @@ Un completo y estilizado **editor Markdown con vista previa en tiempo real**, re
 ```
 src/
 ├── components/
-│   └── MarkdownEditor.vue     # Componente principal de markdown
+│   └── MarkdownEditor.vue      # Componente principal de markdown
 ├── assets/
-│   └── flags/           # Banderas de idiomas
+│   └── flags/                  # Banderas de idiomas
 ├── locales/
 │   ├── en.json
 │   └── es.json
-├── App.vue              # Componente raíz
-├── main.ts              # Punto de entrada
+├── App.vue                     # Componente raíz
+├── main.ts                     # Punto de entrada
 └── ...
 ```
 
